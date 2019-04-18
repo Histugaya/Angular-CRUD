@@ -56,8 +56,11 @@ export class DashboardComponent implements OnInit {
 
   updateProductById(id:number){
     this.service.getProductById(id).subscribe(
-      data =>{
-        this.productForm.setValue({productId:data.ProductId,productName:data.ProductName,deleted:data.Deleted})
+      (data:any)=>{
+        this.productForm.setValue({
+          productId:data.ProductId,
+          productName:data.ProductName,
+          deleted:data.Deleted})
       }
     );
   }
@@ -73,7 +76,10 @@ export class DashboardComponent implements OnInit {
 
   deleteProduct(id:number){
       this.service.deleteProduct(id).subscribe(
-        data =>{this.getAllProduct()}
+        data =>{
+          this.getAllProduct()
+          this.resetForm()
+        }
       );
   }
 

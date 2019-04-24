@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { ProductModule } from './product/product.module';
 
 @Injectable({
@@ -39,3 +38,4 @@ export class DashboardService {
       return this.http.delete(this.baseUrl+"DeleteProduct/"+id);
     }
 }
+

@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../service/login.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent{
 
 constructor(private service: LoginService) {  
 }  
 
 //for preview of image
-imageUrl:String="/assets/image/default.jpg";
+imageUrl:String="";
 fileToUpload:File=null;
 
 handleImageChange(file: FileList){
@@ -23,21 +24,33 @@ var reader = new FileReader();
   this.imageUrl=event.target.result;
   }
 reader.readAsDataURL(this.fileToUpload);
-
 }
 
-  //file upload   
-  upload(Image:any){
-    let file: File = Image.files[0];
-    this.service.uploadImage(file).subscribe(
+imageForm=new FormGroup({
+    username: new FormControl(),
+    image: new FormControl()
+});
+
+  //file upload function
+  upload(imageData){
+    let username=imageData.username;
+    this.service.uploadImage(username,this.fileToUpload).subscribe(
       data=>{
-        this.imageUrl="/assets/image/default.jpg"
         alert("successfully uploaded");
+        this.imageForm.reset();
+        this.imageUrl="";
       }
     );
   }
  
+  getValue(id:number){
+    this.service.getImage(id).subscribe(
+      (data:any)=>{
+          this.imageUrl=data.Image
+          this.imageForm.patchValue({
+            username:data.Name
+          })
+      }
+    )
+  }
 }
-
-
-

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
+import { ImageModule } from '../product/image/image.module';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,15 @@ export class LoginService {
 
     baseUrl:string="http://localhost:62215/api/product/";
    
-    uploadImage(file:File){
+    uploadImage(username:string,fileToUpload:File){
       let formData:FormData = new FormData();
-      formData.append("Image", file, file.name);
+      formData.append("Username",username);
+      formData.append("file",fileToUpload,fileToUpload.name);
       return this.http.post(this.baseUrl+"UploadImage",formData,this.httpOptions);  
     }
+
+    getImage(id:number){
+        return this.http.get<ImageModule>(this.baseUrl+"GetImageById/"+id,this.httpOptions);
+    }
 }
+

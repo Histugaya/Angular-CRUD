@@ -1,5 +1,46 @@
-<form #ImageForm=ngForm (ngSubmit)="upload(Image)">
+<!-- <form #imageForm="ngForm" (ngSubmit)="upload(imageForm.value)" >
+
+    <input type="text" 
+            placeholder="username"  
+            name="username"
+            ngModel
+            [value]="username" 
+            #username="ngModel">
+            <br>
+   
     <img [src]='imageUrl' >
-    <input type="file" #Image accept="image/*" (change)="handleImageChange($event.target.files)" >
-    <button type="submit" [disabled]="!ImageForm.valid || Image.value==''">Upload</button>
+    <input type="file"
+             ngModel
+             #Image="ngModel"
+             name="image"
+             accept="image/*" 
+             (change)="handleImageChange($event.target.files)" >
+             <br>
+
+    <button type="submit" 
+            [disabled]="!imageForm.valid">Upload</button>
+</form> -->
+
+<form [formGroup]="imageForm" (ngSubmit)="upload(imageForm.value)" >
+
+  <input type="text" 
+          placeholder="username"  
+          name="username"
+         formControlName="username" 
+          >
+          <br>
+ 
+  <img [src]='imageUrl' >
+  <input type="file"
+           name="image"
+           accept="image/*"
+           formControlName="image" 
+           (change)="handleImageChange($event.target.files)" >
+           <br>
+
+  <button type="submit" 
+          [disabled]="!imageForm.valid">Upload</button>
 </form>
+
+<input type="text" placeholder="id" #id="ngModel" ngModel name="id">
+<button (click)="getValue(id.value)">Find</button>

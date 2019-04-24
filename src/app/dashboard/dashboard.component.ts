@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
-import { DashboardModule } from './dashboard.module';
 import { ProductModule } from '../product/product.module';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 

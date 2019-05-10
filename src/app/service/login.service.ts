@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
-import { ImageModule } from '../product/image/image.module';
+import { Image } from '../model/image';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,23 @@ export class LoginService {
     }
 
     getImage(id:number){
-        return this.http.get<ImageModule>(this.baseUrl+"GetImageById/"+id,this.httpOptions);
-    }
-}
+        return this.http.get<Image>(this.baseUrl+"GetImageById/"+id,this.httpOptions)
+        .pipe(       
+           catchError(this.handleError)
+        )
+ }
+
+          handleError(error) {
+            let errorMessage = '';
+            if (error.error instanceof ErrorEvent) {
+              // client-side error
+              errorMessage = `Error: ${error.error.message}`;
+            } else {
+              // server-side error
+              errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            }
+            window.alert(errorMessage);
+            return throwError(errorMessage);
+          }
+        }
 

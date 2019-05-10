@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import {RouterModule} from '@angular/router';
 import{ ReactiveFormsModule} from '@angular/forms';
 import { FormsModule} from '@angular/forms';
@@ -16,13 +16,19 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { OperatorComponent } from './operator/operator.component';
+import { ErrorComponent } from './error/error.component';
+import { ErrorService } from './error/error.service';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    OperatorComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -41,16 +47,27 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     RouterModule.forRoot([
       {
         path:'' , 
-        component: LoginComponent
+        component: DashboardComponent
       },
       {
-        path:'dashboard' ,
-         component: DashboardComponent
+        path:'login' ,
+         component: LoginComponent
+      },
+      {
+        path:'operator',
+        component: OperatorComponent
+      },
+      {
+        path:'error',
+        component:ErrorComponent
       }
     ])  
 
   ],
-  providers: [],
+  providers: [{
+    provide:ErrorHandler,
+    useClass: ErrorService
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
-import { ProductModule } from '../product/product.module';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Product } from '../model/product';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  lists:ProductModule[];
+  lists:Product[];
   displayedColumns: string[] = ['id', 'product','deleted','action'];
 
   productForm=new FormGroup({
